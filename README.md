@@ -2,7 +2,7 @@
 
 ## Application Result
 
-![Image1](https://github.com/tograh/testrepository/3DTest.png 81)
+![Image1](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/image.png)
 
 ## Installation
 
