@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
    StyleSheet,
    Text,
    View,
-   Dimensions,
    StatusBar,
    TouchableOpacity,
    TextInput,
@@ -12,103 +11,75 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler'
+import styles from './style'
+import { baseUrl, colors } from '../../constant'
 
-export default function Login({ navigation }) {
+export default function Login({ navigation: { navigate } }) {
+   const [email, setEmail] = useState('')
+   const [password, setPassword] = useState('')
+   const login = () => {
+      fetch(`${baseUrl}/users/login`, {
+         method: 'POST',
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            email: email,
+            password: password
+         })
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            if (!data.message) {
+               setEmail('')
+               setPassword('')
+               navigate('Home')
+            } else {
+               console.log(data.message)
+            }
+            console.log(data)
+         })
+         .catch((error) => {
+            console.error('Error:', error)
+         })
+   }
+
    return (
-      <View
-         style={{
-            flex: 1,
-            alignItems: 'center',
-            backgroundColor: '#4ED2DA'
-         }}
-      >
+      <View style={styles.container}>
          <StatusBar barStyle={'light-content'} backgroundColor="#3549FB" />
          <LinearGradient
-            colors={['#3549FB', '#4ED2DA']}
-            style={{
-               position: 'absolute',
-               left: 0,
-               right: 0,
-               top: 0,
-               height: Dimensions.get('screen').height * 0.77
-            }}
+            colors={[colors.gradient1, colors.gradient2]}
+            style={styles.gradient}
          />
          <TouchableOpacity
-            style={{
-               alignSelf: 'flex-start',
-               paddingStart: 20,
-               paddingTop: 10,
-               height: Dimensions.get('screen').height * 0.1
-            }}
-            onPress={() => navigation.navigate('Welcome')}
+            style={styles.backToWindow}
+            onPress={() => navigate('Welcome')}
          >
             <Ionicons name="md-arrow-back" size={24} color="white" />
          </TouchableOpacity>
-         <ScrollView
-            style={{
-               width: Dimensions.get('screen').width
-            }}
-         >
+         <ScrollView style={styles.scrollView}>
             <KeyboardAvoidingView>
-               <View
-                  style={{
-                     marginTop: Dimensions.get('screen').height * 0.38,
-                     height: Dimensions.get('screen').height * 0.5,
-                     flex: 1,
-                     alignContent: 'center',
-                     padding: 50,
-                     width: '100%',
-                     backgroundColor: '#fff',
-                     borderTopStartRadius: 50,
-                     borderTopEndRadius: 50
-                  }}
-               >
-                  <Text
-                     style={{
-                        fontFamily: 'Roboto',
-                        fontSize: 23,
-                        marginBottom: 20
-                     }}
-                  >
-                     Login
-                  </Text>
+               <View style={styles.registerContainer}>
+                  <Text style={styles.title}>Login</Text>
                   <TextInput
                      placeholder="Email"
+                     value={email}
                      placeholderTextColor="#000"
                      textContentType="emailAddress"
-                     style={{
-                        padding: 2,
-                        borderBottomColor: '#000',
-                        borderBottomWidth: 0.8,
-                        width: '100%',
-                        fontSize: 14,
-                        marginTop: 10
-                     }}
+                     style={styles.textInput}
+                     onChangeText={(text) => setEmail(text)}
                   />
                   <TextInput
                      placeholder="Password"
+                     value={password}
                      placeholderTextColor="#000"
                      textContentType="password"
-                     style={{
-                        padding: 2,
-                        borderBottomColor: '#000',
-                        borderBottomWidth: 0.8,
-                        width: '100%',
-                        fontSize: 14,
-                        marginTop: 10
-                     }}
+                     style={styles.textInput}
+                     onChangeText={(text) => setPassword(text)}
                   />
-                  <TouchableOpacity
-                     style={{
-                        backgroundColor: '#3549FB',
-                        width: '100%',
-                        padding: 10,
-                        alignItems: 'center',
-                        borderRadius: 50,
-                        marginTop: 50
-                     }}
-                  >
-                     <Text style={{ color: '#fff' }}>Login</Text>
+                  <TouchableOpacity style={styles.buttonLogin} onPress={login}>
+                     <Text style={styles.btnText}>Login</Text>
                   </TouchableOpacity>
                </View>
             </KeyboardAvoidingView>
@@ -116,15 +87,3 @@ export default function Login({ navigation }) {
       </View>
    )
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'orange'
-   },
-   gradient: {
-      flex: 1
-   }
-})

@@ -1,0 +1,9 @@
+{
+   "development": {
+      "username": "samuelzega",
+      "password": "password",
+      "database": "abersofttest",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+   }
+}

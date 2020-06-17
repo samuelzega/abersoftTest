@@ -8,78 +8,30 @@ import {
    TouchableOpacity
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import styles from './style'
 
 export default function Welcome({ navigation }) {
    return (
-      <View
-         style={{
-            flex: 1,
-            alignItems: 'center',
-            backgroundColor: '#4ED2DA'
-         }}
-      >
+      <View style={styles.container}>
          <StatusBar barStyle={'light-content'} backgroundColor="#3549FB" />
          <LinearGradient
             colors={['#3549FB', '#4ED2DA']}
-            style={{
-               position: 'absolute',
-               left: 0,
-               right: 0,
-               top: 0,
-               height: Dimensions.get('screen').height * 0.77
-            }}
+            style={styles.gradient}
          />
-         <View
-            style={{
-               marginTop: Dimensions.get('screen').height * 0.5,
-               flex: 1,
-               alignContent: 'center',
-               justifyContent: 'center'
-            }}
-         >
+         <View style={styles.buttonContainer}>
             <TouchableOpacity
-               style={{
-                  backgroundColor: '#fff',
-                  width: Dimensions.get('screen').width * 0.7,
-                  paddingVertical: 5,
-                  alignItems: 'center',
-                  borderRadius: 100,
-                  marginVertical: Dimensions.get('screen').height * 0.027
-               }}
+               style={styles.button}
                onPress={() => navigation.navigate('Register')}
             >
-               <Text style={{ color: '#000', fontFamily: 'Roboto' }}>
-                  Register Account
-               </Text>
+               <Text style={styles.buttonText}>Register Account</Text>
             </TouchableOpacity>
             <TouchableOpacity
-               style={{
-                  backgroundColor: '#fff',
-                  width: Dimensions.get('screen').width * 0.7,
-                  paddingVertical: 5,
-                  alignItems: 'center',
-                  borderRadius: 100,
-                  marginVertical: Dimensions.get('screen').height * 0.027
-               }}
+               style={styles.button}
                onPress={() => navigation.navigate('Login')}
             >
-               <Text style={{ color: '#000', fontFamily: 'Roboto' }}>
-                  Login
-               </Text>
+               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
          </View>
       </View>
    )
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'orange'
-   },
-   gradient: {
-      flex: 1
-   }
-})

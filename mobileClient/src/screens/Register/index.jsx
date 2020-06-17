@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
    StyleSheet,
    Text,
@@ -12,103 +12,77 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler'
+import styles from './style'
+import { colors, baseUrl } from '../../constant'
 
-export default function Register({ navigation }) {
+export default function Register({ navigation: { navigate } }) {
+   const [email, setEmail] = useState('')
+   const [password, setPassword] = useState('')
+   const register = () => {
+      console.log(email, password)
+      fetch(`${baseUrl}/users/`, {
+         method: 'POST',
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            email: email,
+            password: password
+         })
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            if (data.errors) {
+               console.log(data.errors.message)
+            } else {
+               setEmail('')
+               setPassword('')
+               navigate('Welcome')
+            }
+         })
+         .catch((error) => {
+            console.error('Error:', error)
+         })
+   }
    return (
-      <View
-         style={{
-            flex: 1,
-            alignItems: 'center',
-            backgroundColor: '#4ED2DA'
-         }}
-      >
+      <View style={styles.container}>
          <StatusBar barStyle={'light-content'} backgroundColor="#3549FB" />
          <LinearGradient
-            colors={['#3549FB', '#4ED2DA']}
-            style={{
-               position: 'absolute',
-               left: 0,
-               right: 0,
-               top: 0,
-               height: Dimensions.get('screen').height * 0.77
-            }}
+            colors={[colors.gradient1, colors.gradient2]}
+            style={styles.gradient}
          />
          <TouchableOpacity
-            style={{
-               alignSelf: 'flex-start',
-               paddingStart: 20,
-               paddingTop: 10,
-               height: Dimensions.get('screen').height * 0.1
-            }}
-            onPress={() => navigation.navigate('Welcome')}
+            style={styles.backToWindow}
+            onPress={() => navigate('Welcome')}
          >
             <Ionicons name="md-arrow-back" size={24} color="white" />
          </TouchableOpacity>
-         <ScrollView
-            style={{
-               width: Dimensions.get('screen').width
-            }}
-         >
+         <ScrollView style={styles.scrollView}>
             <KeyboardAvoidingView>
-               <View
-                  style={{
-                     marginTop: Dimensions.get('screen').height * 0.38,
-                     height: Dimensions.get('screen').height * 0.5,
-                     flex: 1,
-                     alignContent: 'center',
-                     padding: 50,
-                     width: '100%',
-                     backgroundColor: '#fff',
-                     borderTopStartRadius: 50,
-                     borderTopEndRadius: 50
-                  }}
-               >
-                  <Text
-                     style={{
-                        fontFamily: 'Roboto',
-                        fontSize: 23,
-                        marginBottom: 20
-                     }}
-                  >
-                     Register New Account
-                  </Text>
+               <View style={styles.registerContainer}>
+                  <Text style={styles.title}>Register New Account</Text>
                   <TextInput
                      placeholder="Email"
+                     value={email}
                      placeholderTextColor="#000"
                      textContentType="emailAddress"
-                     style={{
-                        padding: 2,
-                        borderBottomColor: '#000',
-                        borderBottomWidth: 0.8,
-                        width: '100%',
-                        fontSize: 14,
-                        marginTop: 10
-                     }}
+                     style={styles.textInput}
+                     onChangeText={(text) => setEmail(text)}
                   />
                   <TextInput
                      placeholder="Password"
+                     value={password}
                      placeholderTextColor="#000"
                      textContentType="password"
-                     style={{
-                        padding: 2,
-                        borderBottomColor: '#000',
-                        borderBottomWidth: 0.8,
-                        width: '100%',
-                        fontSize: 14,
-                        marginTop: 10
-                     }}
+                     style={styles.textInput}
+                     onChangeText={(text) => setPassword(text)}
                   />
                   <TouchableOpacity
-                     style={{
-                        backgroundColor: '#3549FB',
-                        width: '100%',
-                        padding: 10,
-                        alignItems: 'center',
-                        borderRadius: 50,
-                        marginTop: 50
-                     }}
+                     style={styles.buttonRegister}
+                     onPress={register}
                   >
-                     <Text style={{ color: '#fff' }}>Create Account</Text>
+                     <Text style={styles.btnText}>Create Account</Text>
                   </TouchableOpacity>
                </View>
             </KeyboardAvoidingView>
@@ -116,15 +90,3 @@ export default function Register({ navigation }) {
       </View>
    )
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'orange'
-   },
-   gradient: {
-      flex: 1
-   }
-})
