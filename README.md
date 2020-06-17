@@ -1,12 +1,5 @@
 # abersoftTest
 
-## Application Result
-
-![Image1](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/1.jpeg)
-![Image2](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/2.jpeg)
-![Image3](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/3.jpeg)
-![Image4](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/4.jpeg)
-
 ## Installation
 
 This application made using
@@ -39,3 +32,10 @@ cd mobileClient
 yarn install
 yarn start
 ```
+
+## Application Result
+
+![Image1](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/1.jpeg)
+![Image2](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/2.jpeg)
+![Image3](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/3.jpeg)
+![Image4](https://github.com/samuelzega/abersoftTest/blob/master/mobileClient/assets/applicationResult/4.jpeg)
